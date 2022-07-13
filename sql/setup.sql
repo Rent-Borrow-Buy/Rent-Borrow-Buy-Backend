@@ -25,3 +25,10 @@ sold BOOLEAN NOT NULL DEFAULT(false),
 listed_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+INSERT INTO users (
+    email,
+    password_hash
+)
+VALUES 
+    ('cole@example.com', '$2b$10$fmmjRO8ibktXwC4wEfVSfOlbjmbPBYhDWFZZ58dRy7V2gjKfKfPqm');
