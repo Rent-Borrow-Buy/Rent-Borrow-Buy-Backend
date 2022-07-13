@@ -28,6 +28,7 @@ describe('users routes', () => {
   it('Post /api/v1/users should create user', async () => {
     const res = await request(app).post('/api/v1/users').send(mockUser);
     const { email } = mockUser;
+    console.log(res.body, 'res');
     expect(res.body).toHaveProperty('email', email);
     expect(res.body).not.toHaveProperty('password');
   });
