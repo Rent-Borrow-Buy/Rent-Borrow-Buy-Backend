@@ -32,32 +32,53 @@ describe('items routes', () => {
     pool.end();
   });
 
-  it('lists all items for the authenticated user', async () => {
-    const [agent] = await registerAndLogin();
+  //   it.skip('lists all items for the authenticated user', async () => {
+  //     const [agent] = await registerAndLogin();
 
-    await agent.post('/api/v1/items').send(
-      {
-        title: 'Potato peeler',
-        description: 'Works like a charm',
-        buy: true,
-        rent: true,
-        zipcode: 97034,
-      }
-    );
+  //     await agent.post('/api/v1/items').send(
+  //       {
+  //         title: 'Potato peeler',
+  //         description: 'Works like a charm',
+  //         buy: true,
+  //         rent: true,
+  //         zipcode: 97034,
+  //       }
+  //     );
 
-    const resp = await agent.get('/api/v1/items');
+  //     const resp = await agent.get('/api/v1/items');
+  //     expect(resp.status).toBe(200);
+  //     expect(resp.body).toEqual([
+  //       {
+  //         id: expect.any(String),
+  //         user_id: expect.any(String),
+  //         title: 'Potato peeler',
+  //         description: 'Works like a charm',
+  //         buy: true,
+  //         rent: true,
+  //         borrow: false,
+  //         zipcode: 97034,
+  //         sold: false,
+  //         listed_date: expect.any(String),
+
+  //       }
+  //     ]);
+  //   });
+
+  it('lists all items', async () => {
+
+    const resp = await request(app).get('/api/v1/items');
     expect(resp.status).toBe(200);
     expect(resp.body).toEqual([
       {
         id: expect.any(String),
         user_id: expect.any(String),
-        title: 'Potato peeler',
-        description: 'Works like a charm',
-        buy: true,
-        rent: true,
-        borrow: false,
-        zipcode: 97034,
-        sold: false,
+        title: expect.any(String),
+        description: expect.any(String),
+        buy: expect.any(Boolean),
+        rent: expect.any(Boolean),
+        borrow: expect.any(Boolean),
+        zipcode: expect.any(Number),
+        sold: expect.any(Boolean),
         listed_date: expect.any(String),
 
       }
