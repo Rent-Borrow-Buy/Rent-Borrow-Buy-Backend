@@ -2,26 +2,26 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
-const UserService = require('../lib/services/UserService');
+// const UserService = require('../lib/services/UserService');
 
-const mockUser = {
-  email: 'testing@example.com',
-  password: '654321',  
-};
+// const mockUser = {
+//   email: 'testing@example.com',
+//   password: '654321',  
+// };
 
-const registerAndLogin = async (userProps = {}) => {
+// const registerAndLogin = async (userProps = {}) => {
   
-  const password = userProps.password ?? mockUser.password;
+//   const password = userProps.password ?? mockUser.password;
   
-  const agent = request.agent(app);
+//   const agent = request.agent(app);
 
-  const user = await UserService.create({ ...mockUser, ...userProps });
+//   const user = await UserService.create({ ...mockUser, ...userProps });
 
-  const { email } = user;
-  await agent.post('/api/v1/users/sessions').send({ email, password });
-  return [agent, user];
+//   const { email } = user;
+//   await agent.post('/api/v1/users/sessions').send({ email, password });
+//   return [agent, user];
 
-};
+// };
 
 describe('items routes', () => {
   beforeEach(() => {
@@ -68,7 +68,7 @@ describe('items routes', () => {
 
     const resp = await request(app).get('/api/v1/items');
     expect(resp.status).toBe(200);
-    expect(resp.body).toEqual([
+    expect(resp.body[0]).toEqual(
       {
         id: expect.any(String),
         user_id: expect.any(String),
@@ -82,6 +82,6 @@ describe('items routes', () => {
         listed_date: expect.any(String),
 
       }
-    ]);
+    );
   });
 });
