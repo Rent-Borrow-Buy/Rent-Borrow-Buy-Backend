@@ -4,6 +4,15 @@ const request = require('supertest');
 const app = require('../lib/app');
 // const UserService = require('../lib/services/UserService');
 
+const mockItem = {
+  user_id: '1',
+  title: 'Pencil',
+  description: 'Dixon Ticonderoga',
+  buy: true,
+  zipcode: 97034,
+  sold: true
+};
+
 // const mockUser = {
 //   email: 'testing@example.com',
 //   password: '654321',  
@@ -84,4 +93,26 @@ describe('items routes', () => {
       }
     );
   });
+
+  it('adds an item to the list of items', async () => {
+    
+    const resp = await request(app).post('/api/v1/items').send(mockItem);
+
+    expect(resp.status).toBe(200);
+    expect(resp.body).toEqual(
+      {
+        id: expect.any(String),
+        user_id: '1',
+        title: 'Pencil',
+        description: 'Dixon Ticonderoga',
+        buy: true,
+        rent: false,
+        borrow: false,
+        zipcode: 97034,
+        sold: true,
+        listed_date: expect.any(String),    
+      }
+    );
+  });
+
 });
