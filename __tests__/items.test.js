@@ -105,7 +105,7 @@ describe('items routes', () => {
     expect(resp.body).toEqual(
       {
         id: expect.any(String),
-        user_id: '1',
+        user_id: expect.any(String),
         title: 'Pencil',
         description: 'Dixon Ticonderoga',
         buy: true,
