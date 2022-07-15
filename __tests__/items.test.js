@@ -9,6 +9,8 @@ const mockItem = {
   title: 'Pencil',
   description: 'Dixon Ticonderoga',
   buy: true,
+  rent: false,
+  borrow: false,
   zipcode: 97034,
   sold: true
 };
