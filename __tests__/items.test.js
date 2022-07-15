@@ -96,7 +96,7 @@ describe('items routes', () => {
     );
   });
 
-  it('adds an item to the list of items', async () => {
+  it('posts an item to the list of items', async () => {
     const [agent] = await registerAndLogin();
 
     const resp = await agent.post('/api/v1/items').send(mockItem);
