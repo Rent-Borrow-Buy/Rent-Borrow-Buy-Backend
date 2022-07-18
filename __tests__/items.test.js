@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const UserService = require('../lib/services/UserService');
+jest.mock('../lib/utils/cloudinaryConfig.js');
 
 const mockItem = {
   user_id: '1',
@@ -13,6 +14,7 @@ const mockItem = {
   borrow: false,
   zipcode: 97034,
   sold: true,
+  encodedImage: 'fake image',
 };
 
 const mockUser = {
