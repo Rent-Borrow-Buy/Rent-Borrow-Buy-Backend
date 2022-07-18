@@ -6,43 +6,40 @@ const UserService = require('../lib/services/UserService');
 
 const mockUser = {
   email: 'testing@example.com',
-  password: '123456',
+  password: '654321',  
 };
 
 const registerAndLogin = async (userProps = {}) => {
   const password = userProps.password ?? mockUser.password;
-
   const agent = request.agent(app);
-
   const user = await UserService.create({ ...mockUser, ...userProps });
-
   const { email } = user;
   await agent.post('/api/v1/users/sessions').send({ email, password });
   return [agent, user];
 };
 
-describe('users routes', () => {
+const mockImage = {
+  url: 'http://res.cloudinary.com/rent-borrow-buy/image/upload/v1657842214/fippnhlwjujsmqrc6clw.png',
+};
+
+describe.skip('images routes', () => {
   beforeEach(() => {
     return setup(pool);
-  });
-  it('Post /api/v1/users should create user', async () => {
-    const res = await request(app).post('/api/v1/users').send(mockUser);
-    const { email } = mockUser;
-    expect(res.body).toHaveProperty('email', email);
-    expect(res.body).not.toHaveProperty('password');
-  });
-
-  it('GET /api/v1/users/me should return current user info', async () => {
-    const [agent, user] = await registerAndLogin();
-    const me = await agent.get('/api/v1/users/me');
-    expect(me.body).toEqual({
-      ...user,
-      exp: expect.any(Number),
-      iat: expect.any(Number),
-    });
   });
 
   afterAll(() => {
     pool.end();
+  });
+  it('uploads image', async () => {
+
+    const resp = await request(app).post('/api/v1/images/upload');
+    const { url } = mockImage;
+    expect(resp.status).toBe(200);
+    expect(resp.body).toEqual(
+      {
+    
+
+      }
+    );
   });
 });
