@@ -2,6 +2,7 @@
 -- The SQL in this file will be executed when you run `npm run setup-db`
 DROP TABLE IF EXISTS users cascade;
 DROP TABLE IF EXISTS items cascade;
+DROP TABLE IF EXISTS images cascade;
 
 
 CREATE TABLE users (
@@ -20,13 +21,21 @@ id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 user_id BIGINT NOT NULL,
 title VARCHAR NOT NULL,
 description VARCHAR NOT NULL, 
-buy BOOLEAN NOT NULL DEFAULT(false),
-rent BOOLEAN NOT NULL DEFAULT(false),
-borrow BOOLEAN NOT NULL DEFAULT(false),
+buy BOOLEAN NOT NULL,
+rent BOOLEAN NOT NULL,
+borrow BOOLEAN NOT NULL,
 zipcode INT,
-sold BOOLEAN NOT NULL DEFAULT(false),
+sold BOOLEAN DEFAULT(false),
 listed_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE images (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    url VARCHAR NOT NULL,
+    item_id BIGINT NOT NULL,
+    main BOOLEAN NOT NULL DEFAULT(false),
+    FOREIGN KEY (item_id) REFERENCES items(id)
 );
 
 INSERT INTO users (
