@@ -34,7 +34,6 @@ CREATE TABLE images (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     url VARCHAR NOT NULL,
     item_id BIGINT NOT NULL,
-    main BOOLEAN DEFAULT(false),
     FOREIGN KEY (item_id) REFERENCES items(id)
 );
 
