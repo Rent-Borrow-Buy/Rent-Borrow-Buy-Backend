@@ -96,19 +96,25 @@ describe('items routes', () => {
     const [agent] = await registerAndLogin();
 
     const resp = await agent.post('/api/v1/items').send(mockItem);
-
     expect(resp.status).toBe(200);
     expect(resp.body).toEqual({
-      id: expect.any(String),
-      user_id: expect.any(String),
-      title: 'Pencil',
-      description: 'Dixon Ticonderoga',
-      buy: true,
-      rent: false,
-      borrow: false,
-      zipcode: '97034',
-      sold: true,
-      listed_date: expect.any(String),
+      item: {
+        id: expect.any(String),
+        user_id: expect.any(String),
+        title: 'Pencil',
+        description: 'Dixon Ticonderoga',
+        buy: true,
+        rent: false,
+        borrow: false,
+        zipcode: '97034',
+        sold: true,
+        listed_date: expect.any(String),
+      },
+      image: {
+        id: expect.any(String),
+        url: expect.any(String),
+        item_id: expect.any(String),
+      }
     });
   });
 });
