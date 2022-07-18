@@ -12,7 +12,7 @@ const mockItem = {
   buy: true,
   rent: false,
   borrow: false,
-  zipcode: 97034,
+  zipcode: '97034',
   sold: true,
   encodedImage: 'fake image',
 };
@@ -86,7 +86,7 @@ describe('items routes', () => {
       buy: expect.any(Boolean),
       rent: expect.any(Boolean),
       borrow: expect.any(Boolean),
-      zipcode: expect.any(Number),
+      zipcode: expect.any(String),
       sold: expect.any(Boolean),
       listed_date: expect.any(String),
     });
@@ -106,7 +106,7 @@ describe('items routes', () => {
       buy: true,
       rent: false,
       borrow: false,
-      zipcode: 97034,
+      zipcode: '97034',
       sold: true,
       listed_date: expect.any(String),
     });
