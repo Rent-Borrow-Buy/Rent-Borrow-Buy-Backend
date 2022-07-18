@@ -13,7 +13,7 @@ last_name VARCHAR,
 email VARCHAR NOT NULL UNIQUE,
 avatar VARCHAR,
 password_hash VARCHAR NOT NULL,
-zipcode INT
+zipcode VARCHAR
 );
 
 CREATE TABLE items (
@@ -24,7 +24,7 @@ description VARCHAR NOT NULL,
 buy BOOLEAN NOT NULL,
 rent BOOLEAN NOT NULL,
 borrow BOOLEAN NOT NULL,
-zipcode INT,
+zipcode VARCHAR,
 sold BOOLEAN DEFAULT(false),
 listed_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 FOREIGN KEY (user_id) REFERENCES users(id)
@@ -56,5 +56,5 @@ INSERT INTO items (
     sold
 )
 VALUES
-    ('1', 'Cheese', 'For smelling purposes only, must be returned in original condition', false, false, true, 97232, false),
-    ('1', 'Crayons', 'Heavily used and missing most colors in packet, strange odor', true, true, false, 97214, false);
+    ('1', 'Cheese', 'For smelling purposes only, must be returned in original condition', false, false, true, '97232', false),
+    ('1', 'Crayons', 'Heavily used and missing most colors in packet, strange odor', true, true, false, '97214', false);
