@@ -75,6 +75,10 @@ describe('items routes', () => {
   //   });
             
   it('lists all items', async () => {
+    const [agent] = await registerAndLogin();
+
+    await agent.post('/api/v1/items').send(mockItem);
+    
     const resp = await request(app).get('/api/v1/items');
     expect(resp.status).toBe(200);
     expect(resp.body[0]).toEqual({
@@ -88,6 +92,7 @@ describe('items routes', () => {
       price: expect.any(String),
       zipcode: expect.any(String),
       sold: expect.any(Boolean),
+      url: expect.any(String),
       listed_date: expect.any(String),
     });
   });
