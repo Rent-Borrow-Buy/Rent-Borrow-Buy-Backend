@@ -24,6 +24,7 @@ description VARCHAR NOT NULL,
 buy BOOLEAN NOT NULL,
 rent BOOLEAN NOT NULL,
 borrow BOOLEAN NOT NULL,
+price DECIMAL,
 zipcode VARCHAR,
 sold BOOLEAN DEFAULT(false),
 listed_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -51,9 +52,10 @@ INSERT INTO items (
     buy,
     rent,
     borrow,
+    price,
     zipcode,
     sold
 )
 VALUES
-    ('1', 'Cheese', 'For smelling purposes only, must be returned in original condition', false, false, true, '97232', false),
-    ('1', 'Crayons', 'Heavily used and missing most colors in packet, strange odor', true, true, false, '97214', false);
+    ('1', 'Cheese', 'For smelling purposes only, must be returned in original condition', false, false, true, 8, '97232', false),
+    ('1', 'Crayons', 'Heavily used and missing most colors in packet, strange odor', true, true, false, 5.5,  '97214', false);
