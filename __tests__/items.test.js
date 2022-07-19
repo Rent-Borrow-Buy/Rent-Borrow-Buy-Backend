@@ -3,6 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 const UserService = require('../lib/services/UserService');
+const Item = require('../lib/models/Item');
 jest.mock('../lib/utils/cloudinaryConfig.js');
 
 const mockItem = {
@@ -19,7 +20,7 @@ const mockItem = {
 };
 
 const mockUser = {
-  email: 'testing@example.com',
+  email: 'testing4@example.com',
   password: '654321',
 };
 
@@ -40,13 +41,10 @@ describe('items routes', () => {
     return setup(pool);
   });
 
-  afterAll(() => {
-    pool.end();
-  });
-
+  
   //   it.skip('lists all items for the authenticated user', async () => {
   //     const [agent] = await registerAndLogin();
-
+    
   //     await agent.post('/api/v1/items').send(
   //       {
   //         title: 'Potato peeler',
@@ -56,7 +54,7 @@ describe('items routes', () => {
   //         zipcode: 97034,
   //       }
   //     );
-
+        
   //     const resp = await agent.get('/api/v1/items');
   //     expect(resp.status).toBe(200);
   //     expect(resp.body).toEqual([
@@ -71,11 +69,11 @@ describe('items routes', () => {
   //         zipcode: 97034,
   //         sold: false,
   //         listed_date: expect.any(String),
-
+            
   //       }
   //     ]);
   //   });
-
+            
   it('lists all items', async () => {
     const resp = await request(app).get('/api/v1/items');
     expect(resp.status).toBe(200);
@@ -93,10 +91,10 @@ describe('items routes', () => {
       listed_date: expect.any(String),
     });
   });
-
+            
   it('posts an item to the list of items', async () => {
     const [agent] = await registerAndLogin();
-
+              
     const resp = await agent.post('/api/v1/items').send(mockItem);
     expect(resp.status).toBe(200);
     expect(resp.body).toEqual({
@@ -118,5 +116,31 @@ describe('items routes', () => {
         item_id: expect.any(String),
       },
     });
+  });
+  it.only('PUT /api/v1/items/:id should update an item by authorized user', async () => {
+    const [agent, user] = await registerAndLogin();
+    const item = await Item.insert({
+      title: 'Wine',
+      description: 'dhcfdrf',
+      buy: true,
+      rent: false,
+      borrow: false,
+      price:'8',
+      zipcode: '97034',
+      sold: true,
+      encodedImage: 'fake image',
+      user_id: user.id,
+    
+    });
+    //object we are going to edit
+    const resp = await agent.put(`/api/v1/items/${item.id}`).send({ 
+      description: 'Boxed wine because we are on a budget girl' });
+   
+    expect(resp.status).toBe(200);
+    expect(resp.body).toEqual({ ...item, listed_date: expect.any(String), description: 'Boxed wine because we are on a budget girl' });
+  });
+            
+  afterAll(() => {
+    pool.end();
   });
 });

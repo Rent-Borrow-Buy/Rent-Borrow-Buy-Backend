@@ -5,7 +5,7 @@ const app = require('../lib/app');
 const UserService = require('../lib/services/UserService');
 
 const mockUser = {
-  email: 'testing@example.com',
+  email: 'testing5@example.com',
   password: '123456',
 };
 
