@@ -58,3 +58,11 @@ INSERT INTO items (
 VALUES
     ('1', 'Cheese', 'For smelling purposes only, must be returned in original condition', false, false, true, 8, '97232', false),
     ('1', 'Crayons', 'Heavily used and missing most colors in packet, strange odor', true, true, false, 5.5,  '97214', false);
+
+INSERT INTO images (
+    item_id,
+    url
+)
+VALUES
+('1', 'https://res.cloudinary.com/rent-borrow-buy/image/upload/v1658333993/e4q0bkwmwgba5fwu89ve.png'),
+('2', 'https://res.cloudinary.com/rent-borrow-buy/image/upload/v1658273813/qpgx6znlo8lxgkwscfv3.jpg')
