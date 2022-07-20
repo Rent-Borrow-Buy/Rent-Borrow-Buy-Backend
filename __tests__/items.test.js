@@ -21,7 +21,7 @@ const mockItem = {
 };
 
 const mockUser = {
-  email: 'testing4@example.com',
+  email: 'testing5@example.com',
   password: '654321',
 };
 
@@ -117,7 +117,6 @@ describe('items routes', () => {
         price: expect.any(String),
         images: expect.any(Array),
         listed_date: expect.any(String),
-        price: expect.any(String)
       },
       image: {
         id: expect.any(String),
@@ -183,7 +182,7 @@ describe('items routes', () => {
 
   it('DELETE should delete an item from authorized user', async () => {
     const [agent, user] = await registerAndLogin();
-    const item = await Item.insert({
+    const item2 = await agent.post('/api/v1/items').send({
       title: 'Wine',
       description: 'dhcfdrf',
       buy: true,
@@ -196,10 +195,11 @@ describe('items routes', () => {
       user_id: user.id,
     });
 
+    const item = item2.body.item;
     const resp = await agent.delete(`/api/v1/items/${item.id}`);
     expect(resp.status).toBe(200);
 
-    const check = await Item.getById(item.id);
+    const check = await Item.getById(item2.id);
     expect(check).toBeNull();
   });
 
