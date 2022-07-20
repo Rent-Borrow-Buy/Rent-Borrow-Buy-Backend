@@ -5,6 +5,7 @@ const app = require('../lib/app');
 const Image = require('../lib/models/Image');
 const UserService = require('../lib/services/UserService');
 jest.mock('../lib/utils/cloudinaryConfig.js');
+const Item = require('../lib/models/Item');
 
 const mockItem = {
   user_id: '1',
