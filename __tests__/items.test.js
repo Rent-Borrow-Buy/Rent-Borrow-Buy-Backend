@@ -2,6 +2,7 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const Image = require('../lib/models/Image');
 const UserService = require('../lib/services/UserService');
 jest.mock('../lib/utils/cloudinaryConfig.js');
 
@@ -91,6 +92,7 @@ describe('items routes', () => {
       zipcode: expect.any(String),
       sold: expect.any(Boolean),
       url: expect.any(String),
+      images: expect.any(Array),
       listed_date: expect.any(String),
     });
   });
@@ -111,6 +113,8 @@ describe('items routes', () => {
         borrow: false,
         zipcode: '97034',
         sold: true,
+        price: expect.any(String),
+        images: expect.any(Array),
         listed_date: expect.any(String),
       },
       image: {
@@ -120,7 +124,7 @@ describe('items routes', () => {
       },
     });
   });
-  it.only('PUT /api/v1/items/:id should update an item by authorized user', async () => {
+  it('PUT /api/v1/items/:id should update an item by authorized user', async () => {
     const [agent] = await registerAndLogin();
     const postRes = await agent.post('/api/v1/items').send({
       title: 'Wine',
@@ -145,6 +149,30 @@ describe('items routes', () => {
       listed_date: expect.any(String),
       description: 'Boxed wine because we are on a budget girl',
     });
+  });
+
+  it('should retrieve details for an item by id', async () => {
+    const [agent] = await registerAndLogin();
+    // Add an item
+    const postRes = await agent.post('/api/v1/items').send(mockItem);
+    const { item } = postRes.body;
+
+    // Add a second image to the item
+    await Image.insert({
+      url: 'fake-image-url',
+      item_id: item.id,
+    });
+
+    // Get item details with images array
+    const resp = await agent.get(`/api/v1/items/${item.id}`);
+
+    expect(resp.status).toBe(200);
+    expect(resp.body.id).toEqual(item.id);
+    expect(resp.body.title).toEqual(item.title);
+    expect(resp.body.images).toHaveLength(2);
+    expect(resp.body.images).toContainEqual(
+      expect.objectContaining({ url: 'fake-image-url' })
+    );
   });
 
   afterAll(() => {
