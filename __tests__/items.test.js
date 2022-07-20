@@ -126,7 +126,7 @@ describe('items routes', () => {
     const [agent, user] = await registerAndLogin();
     const item = await Item.insert({
       title: 'Wine',
-      description: 'dhcfdrf',
+      description: 'Real bad',
       buy: true,
       rent: false,
       borrow: false,
@@ -135,8 +135,8 @@ describe('items routes', () => {
       sold: true,
       encodedImage: 'fake image',
       user_id: user.id,
-    
     });
+    
     //object we are going to edit
     const resp = await agent.put(`/api/v1/items/${item.id}`).send({ 
       description: 'Boxed wine because we are on a budget girl' });
