@@ -117,6 +117,7 @@ describe('items routes', () => {
         price: expect.any(String),
         images: expect.any(Array),
         listed_date: expect.any(String),
+        price: expect.any(String)
       },
       image: {
         id: expect.any(String),
@@ -126,8 +127,10 @@ describe('items routes', () => {
     });
   });
   it('PUT /api/v1/items/:id should update an item by authorized user', async () => {
+
     const [agent] = await registerAndLogin();
     const postRes = await agent.post('/api/v1/items').send({
+
       title: 'Wine',
       description: 'Real bad',
       buy: true,
@@ -137,6 +140,7 @@ describe('items routes', () => {
       zipcode: '97034',
       sold: true,
       encodedImage: 'fake image',
+
     });
     const item = postRes.body.item;
     //object we are going to edit
@@ -175,6 +179,30 @@ describe('items routes', () => {
       expect.objectContaining({ url: 'fake-image-url' })
     );
   });
+
+
+  it('DELETE should delete an item from authorized user', async () => {
+    const [agent, user] = await registerAndLogin();
+    const item = await Item.insert({
+      title: 'Wine',
+      description: 'dhcfdrf',
+      buy: true,
+      rent: false,
+      borrow: false,
+      price:'8',
+      zipcode: '97034',
+      sold: true,
+      encodedImage: 'fake image',
+      user_id: user.id,
+    });
+
+    const resp = await agent.delete(`/api/v1/items/${item.id}`);
+    expect(resp.status).toBe(200);
+
+    const check = await Item.getById(item.id);
+    expect(check).toBeNull();
+  });
+
 
   afterAll(() => {
     pool.end();
