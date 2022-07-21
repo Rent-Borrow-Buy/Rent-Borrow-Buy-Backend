@@ -64,5 +64,5 @@ INSERT INTO images (
     url
 )
 VALUES
-('1', 'https://res.cloudinary.com/rent-borrow-buy/image/upload/v1658333993/e4q0bkwmwgba5fwu89ve.png'),
-('2', 'https://res.cloudinary.com/rent-borrow-buy/image/upload/v1658273813/qpgx6znlo8lxgkwscfv3.jpg')
+('1', 'https://res.cloudinary.com/rent-borrow-buy/image/upload/v1658420375/cheese_kgqrhm.jpg'),
+('2', 'https://res.cloudinary.com/rent-borrow-buy/image/upload/v1658420526/crayons_htovje.jpg')
